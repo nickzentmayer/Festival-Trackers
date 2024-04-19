@@ -950,7 +950,7 @@
 	)
 	(wire
 		(pts
-			(xy 48.26 27.94) (xy 48.26 31.75)
+			(xy 43.18 27.94) (xy 43.18 31.75)
 		)
 		(stroke
 			(width 0)
@@ -1098,28 +1098,6 @@
 			)
 		)
 	)
-	(global_label "XL_CS"
-		(shape input)
-		(at 29.21 30.48 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "944b2ea1-13e1-450c-bccc-53bbc2117b8f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 20.5401 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "SCL"
 		(shape input)
 		(at 63.5 30.48 180)
@@ -1142,32 +1120,10 @@
 			)
 		)
 	)
-	(global_label "MAG_CS"
-		(shape input)
-		(at 48.26 30.48 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "f27fee4e-24b7-4100-83c8-ab359339c359")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 38.0177 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at 48.26 31.75 180)
+		(at 43.18 31.75 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1177,7 +1133,7 @@
 		)
 		(uuid "071a2169-bead-4935-945a-ef25174a3015")
 		(property "Netclass" "CS_MAG"
-			(at 48.9585 34.29 0)
+			(at 43.8785 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1346,7 +1302,7 @@
 	)
 	(symbol
 		(lib_id "power:VDD")
-		(at 48.26 22.86 0)
+		(at 43.18 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1355,7 +1311,7 @@
 		(fields_autoplaced yes)
 		(uuid "0077f391-2224-44e9-a1cd-abca67d1ee2e")
 		(property "Reference" "#PWR010"
-			(at 48.26 26.67 0)
+			(at 43.18 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1364,7 +1320,7 @@
 			)
 		)
 		(property "Value" "VDD"
-			(at 48.26 17.78 0)
+			(at 43.18 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1372,7 +1328,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 48.26 22.86 0)
+			(at 43.18 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1381,7 +1337,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 48.26 22.86 0)
+			(at 43.18 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1390,7 +1346,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VDD\""
-			(at 48.26 22.86 0)
+			(at 43.18 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2250,7 +2206,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 48.26 25.4 0)
+		(at 43.18 25.4 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2259,7 +2215,7 @@
 		(fields_autoplaced yes)
 		(uuid "dd6d78a8-eb5b-47d9-a192-1cf05a67ef86")
 		(property "Reference" "R2"
-			(at 50.8 24.1299 0)
+			(at 45.72 24.1299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2268,7 +2224,7 @@
 			)
 		)
 		(property "Value" "10K"
-			(at 50.8 26.6699 0)
+			(at 45.72 26.6699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2277,7 +2233,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 48.26 25.4 0)
+			(at 43.18 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2286,7 +2242,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 48.26 25.4 0)
+			(at 43.18 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2295,7 +2251,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 48.26 25.4 0)
+			(at 43.18 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)

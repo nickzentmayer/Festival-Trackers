@@ -1885,12 +1885,6 @@
 		(uuid "4b646216-7fe1-4e3f-8e89-3c6f5881a186")
 	)
 	(junction
-		(at 110.49 113.03)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4c3598ac-ac7c-402a-893a-f633285eae92")
-	)
-	(junction
 		(at 180.34 96.52)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1955,6 +1949,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ea8874e5-d961-46ee-a67d-6ae1f7a3f9a7")
+	)
+	(junction
+		(at 110.49 111.76)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "efe88952-fd02-486b-9345-c51364972cff")
 	)
 	(junction
 		(at 152.4 95.25)
@@ -2144,7 +2144,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 59.69) (xy 238.76 59.69)
+			(xy 232.41 59.69) (xy 233.68 59.69)
 		)
 		(stroke
 			(width 0)
@@ -2174,7 +2174,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 116.84) (xy 130.81 113.03)
+			(xy 130.81 116.84) (xy 130.81 111.76)
 		)
 		(stroke
 			(width 0)
@@ -2394,7 +2394,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 113.03) (xy 128.27 113.03)
+			(xy 130.81 111.76) (xy 128.27 111.76)
 		)
 		(stroke
 			(width 0)
@@ -2694,13 +2694,23 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 107.95) (xy 110.49 113.03)
+			(xy 110.49 107.95) (xy 110.49 111.76)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "e0e2485f-e39e-45c9-813a-28091800d69a")
+	)
+	(wire
+		(pts
+			(xy 110.49 111.76) (xy 123.19 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1aaa7a0-75a4-474b-98b1-376d18393b24")
 	)
 	(wire
 		(pts
@@ -2754,13 +2764,13 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 113.03) (xy 110.49 113.03)
+			(xy 110.49 111.76) (xy 110.49 113.03)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "ee98edf1-4658-4e0a-b4b7-854ee7a38994")
+		(uuid "eef3262d-f87f-47e3-a87c-e16b9b6d434a")
 	)
 	(wire
 		(pts
@@ -2834,7 +2844,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 59.69) (xy 229.87 59.69)
+			(xy 224.79 59.69) (xy 227.33 59.69)
 		)
 		(stroke
 			(width 0)
@@ -3185,7 +3195,7 @@
 	)
 	(global_label "ANT_SW"
 		(shape input)
-		(at 238.76 59.69 0)
+		(at 233.68 59.69 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3195,7 +3205,7 @@
 		)
 		(uuid "9939370d-8b46-4883-a6b1-f365225f8ee0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 248.7604 59.69 0)
+			(at 243.6804 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4317,7 +4327,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Small")
-		(at 125.73 113.03 90)
+		(at 125.73 111.76 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4326,7 +4336,7 @@
 		(fields_autoplaced yes)
 		(uuid "4a63ce7d-50b6-47ef-ae75-c07fc1db1b16")
 		(property "Reference" "C11"
-			(at 125.7363 106.68 90)
+			(at 125.7363 105.41 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4334,7 +4344,7 @@
 			)
 		)
 		(property "Value" "2.4pF"
-			(at 125.7363 109.22 90)
+			(at 125.7363 107.95 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4342,7 +4352,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 125.73 113.03 0)
+			(at 125.73 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4351,7 +4361,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 125.73 113.03 0)
+			(at 125.73 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4360,7 +4370,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, small symbol"
-			(at 125.73 113.03 0)
+			(at 125.73 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5202,7 +5212,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 232.41 59.69 90)
+		(at 229.87 59.69 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5211,7 +5221,7 @@
 		(fields_autoplaced yes)
 		(uuid "9a895d2f-8ff0-46fc-9b86-fbb3db2c8692")
 		(property "Reference" "R4"
-			(at 232.41 54.61 90)
+			(at 229.87 54.61 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5219,7 +5229,7 @@
 			)
 		)
 		(property "Value" "100R"
-			(at 232.41 57.15 90)
+			(at 229.87 57.15 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5227,7 +5237,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 232.41 59.69 0)
+			(at 229.87 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5236,7 +5246,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 232.41 59.69 0)
+			(at 229.87 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5245,7 +5255,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 232.41 59.69 0)
+			(at 229.87 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)

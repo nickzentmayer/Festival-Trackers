@@ -266,12 +266,7 @@
       "version": 3
     },
     "net_colors": null,
-    "netclass_assignments": {
-      "unconnected-(U3-CS_MAG-Pad3)": "CS_MAG",
-      "unconnected-(U3-CS_XL-Pad2)": "CS_XL",
-      "unconnected-(U3-SCL{slash}SPC-Pad1)": "SCL",
-      "unconnected-(U3-SDA{slash}SDI{slash}SDO-Pad4)": "SDA"
-    },
+    "netclass_assignments": null,
     "netclass_patterns": []
   },
   "pcbnew": {
