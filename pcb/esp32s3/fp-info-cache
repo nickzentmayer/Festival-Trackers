@@ -1,4 +1,25 @@
-23142117114365323
+23154112332603708
+2450AT18D0100E
+2450AT18D0100E_JOT
+
+2450AT18D0100E 
+0
+4
+4
+2450AT18D0100E
+2450AT18D0100E_JOT-L
+
+2450AT18D0100E 
+0
+4
+4
+2450AT18D0100E
+2450AT18D0100E_JOT-M
+
+2450AT18D0100E 
+0
+4
+4
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -62292,6 +62313,27 @@ solder jumper open
 0
 5
 3
+KiCAD Parts
+PQFN50P200X200X100-12N
+
+
+0
+12
+12
+KiCAD Parts
+SOP65P490X110-8N
+
+
+0
+8
+8
+KiCAD Parts
+SOT65P215X110-6N
+
+
+0
+6
+6
 LED_SMD
 LED-APA102-2020
 http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf
@@ -94770,8 +94812,8 @@ ATGM336H
 
 
 0
-0
-0
+18
+18
 footprints
 KAN0444-0201B5
 
@@ -94779,6 +94821,13 @@ KAN0444-0201B5
 0
 4
 4
+footprints
+MSR421R
+
+
+0
+2
+2
 footprints
 SOT163-1_NEX
 

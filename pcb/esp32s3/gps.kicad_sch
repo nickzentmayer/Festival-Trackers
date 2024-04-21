@@ -2,7 +2,7 @@
 	(version 20231120)
 	(generator "eeschema")
 	(generator_version "8.0")
-	(uuid "1cb1a674-16a8-4d9b-af33-0cf24ea4ad03")
+	(uuid "742f9295-106e-4def-908d-f5ab10fcd516")
 	(paper "A4")
 	(lib_symbols
 		(symbol "24AA32AF-I_MS:24AA32AF-I_MS"
@@ -2130,7 +2130,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 129.2352 49.53 0)
 			(effects
 				(font
@@ -2199,7 +2199,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "footprints:MSR421R"
 			(at 193.04 73.406 90)
 			(effects
 				(font
@@ -2267,7 +2267,7 @@
 				)
 			)
 		)
-		(property "Footprint" "24AA32AF-I_MS:SOP65P490X110-8N"
+		(property "Footprint" "KiCAD Parts:SOP65P490X110-8N"
 			(at 86.36 97.79 0)
 			(effects
 				(font
@@ -2548,7 +2548,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3411f8f7-f4bc-4dbb-8451-be931884b7f2")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR041"
 			(at 193.04 58.42 0)
 			(effects
 				(font
@@ -2598,7 +2598,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR034")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -2614,7 +2614,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "40682094-9fda-4b0b-9fc3-463c1b0f9abb")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR035"
 			(at 60.96 106.68 0)
 			(effects
 				(font
@@ -2664,7 +2664,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR037")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -2749,8 +2749,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "95bd61d3-9a6c-4038-a0b8-17beeeeccb25")
-		(property "Reference" "ATGM336H2"
-			(at 138.43 57.15 0)
+		(property "Reference" "ATGM336H1"
+			(at 138.43 55.118 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2831,7 +2831,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "ATGM336H2")
+					(reference "ATGM336H1")
 					(unit 1)
 				)
 			)
@@ -2846,7 +2846,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9b1797dd-2860-4377-8bd5-7a105484b533")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR037"
 			(at 104.14 76.2 0)
 			(effects
 				(font
@@ -2896,7 +2896,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR036")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -2912,7 +2912,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a40c48e2-b0d7-4fff-b48f-1f418687d8d0")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR036"
 			(at 64.77 115.57 0)
 			(effects
 				(font
@@ -2962,7 +2962,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR038")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -2996,7 +2996,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 147.0152 49.53 0)
 			(effects
 				(font
@@ -3047,7 +3047,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bf346aa4-547d-4518-b794-a0e05027a57c")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR039"
 			(at 137.16 55.88 0)
 			(effects
 				(font
@@ -3097,7 +3097,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR032")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -3113,7 +3113,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c620d461-1b45-43b4-91a8-829c7c7a8b1a")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR042"
 			(at 193.04 87.63 0)
 			(effects
 				(font
@@ -3163,7 +3163,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR035")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -3194,7 +3194,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
 			(at 118.11 71.12 0)
 			(effects
 				(font
@@ -3246,7 +3246,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d9439e73-f370-4db6-84d4-b88f735fa0f3")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR038"
 			(at 137.16 43.18 0)
 			(effects
 				(font
@@ -3296,7 +3296,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR033")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -3312,7 +3312,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eab78999-aa7b-4edf-833c-6b8888fd8b72")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR040"
 			(at 154.94 96.52 0)
 			(effects
 				(font
@@ -3362,7 +3362,7 @@
 		(instances
 			(project "esp32s3"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/c241b7c0-effc-4bf6-a5ff-9f24a08e0fe4"
-					(reference "#PWR031")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
