@@ -606,6 +606,10 @@
     [
       "6d1ec38a-9877-4911-b70b-e16d7b260b25",
       "Accel & Magnetometer"
+    ],
+    [
+      "6a955eae-a444-4222-9692-6ef4e09b86d6",
+      "LCD"
     ]
   ],
   "text_variables": {}
