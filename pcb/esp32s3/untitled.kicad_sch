@@ -1344,7 +1344,7 @@
 				)
 			)
 		)
-		(property "Footprint" "KiCAD Parts:PQFN50P200X200X100-12N"
+		(property "Footprint" "custom_comps:PQFN50P200X200X100-12N"
 			(at 142.24 99.06 0)
 			(effects
 				(font

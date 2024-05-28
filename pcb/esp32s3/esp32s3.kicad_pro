@@ -458,8 +458,8 @@
     },
     "net_colors": null,
     "netclass_assignments": {
-      "XL_COMP_SCL": "SDA",
-      "XL_COMP_SDA": "SCL",
+      "SCL": "SDA",
+      "SDA": "SCL",
       "unconnected-(R14-Pad2)": "CS_XL",
       "unconnected-(R15-Pad2)": "CS_MAG",
       "unconnected-(U8-CS_MAG-Pad3)": "CS_MAG",
@@ -610,6 +610,10 @@
     [
       "6a955eae-a444-4222-9692-6ef4e09b86d6",
       "LCD"
+    ],
+    [
+      "f8079354-7ec4-4be7-9de4-f236f07ffb63",
+      "IO Expander"
     ]
   ],
   "text_variables": {}
