@@ -2971,13 +2971,13 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 110.49) (xy 71.12 110.49)
+			(xy 68.58 110.49) (xy 80.01 110.49)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "19838d95-971f-49ca-8abb-6cdb9075fb3c")
+		(uuid "1525d927-60fb-4f25-9d93-2156fb8e0bdf")
 	)
 	(wire
 		(pts
@@ -3061,7 +3061,7 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 110.49) (xy 71.12 97.79)
+			(xy 71.12 97.79) (xy 71.12 113.03)
 		)
 		(stroke
 			(width 0)
@@ -3078,16 +3078,6 @@
 			(type default)
 		)
 		(uuid "36919063-cfb5-4f20-bf64-b2b02996a784")
-	)
-	(wire
-		(pts
-			(xy 68.58 113.03) (xy 68.58 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3f62699d-7aa5-4aa3-bb37-65f3c6c5115e")
 	)
 	(wire
 		(pts
@@ -3181,6 +3171,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 110.49) (xy 95.25 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fb0e1a9-071d-48a0-bf6c-9a170c58155a")
+	)
+	(wire
+		(pts
 			(xy 69.85 87.63) (xy 86.36 87.63)
 		)
 		(stroke
@@ -3228,6 +3228,16 @@
 			(type default)
 		)
 		(uuid "6fbf2d75-442e-4f85-a2b0-322eb48446d0")
+	)
+	(wire
+		(pts
+			(xy 68.58 102.87) (xy 68.58 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "722c7c74-a0a5-4571-8140-4691cd368385")
 	)
 	(wire
 		(pts
@@ -3301,16 +3311,6 @@
 	)
 	(wire
 		(pts
-			(xy 90.17 110.49) (xy 96.52 110.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8b63ead4-4c6b-4e17-a2ed-bf53db867f9d")
-	)
-	(wire
-		(pts
 			(xy 67.31 102.87) (xy 67.31 104.14)
 		)
 		(stroke
@@ -3358,6 +3358,16 @@
 			(type default)
 		)
 		(uuid "9a68e48a-4a0d-4fa7-8326-b3973367ac5d")
+	)
+	(wire
+		(pts
+			(xy 71.12 113.03) (xy 80.01 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f9998e8-0f2c-4725-8951-c0b3a8b91b7e")
 	)
 	(wire
 		(pts
@@ -3631,6 +3641,16 @@
 	)
 	(wire
 		(pts
+			(xy 95.25 113.03) (xy 90.17 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ef1e11df-7676-4336-948a-29c5221d3a40")
+	)
+	(wire
+		(pts
 			(xy 128.27 46.99) (xy 138.43 46.99)
 		)
 		(stroke
@@ -3641,16 +3661,6 @@
 	)
 	(wire
 		(pts
-			(xy 90.17 113.03) (xy 96.52 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f10b96f6-5ca7-42d1-82ee-30c674556b3b")
-	)
-	(wire
-		(pts
 			(xy 29.21 29.21) (xy 29.21 30.48)
 		)
 		(stroke
@@ -3658,16 +3668,6 @@
 			(type default)
 		)
 		(uuid "fe318e76-b3e2-406d-990f-faffb7aadb1f")
-	)
-	(wire
-		(pts
-			(xy 80.01 113.03) (xy 68.58 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fffaf9b8-55d6-42e5-a2f0-442284afc1b1")
 	)
 	(text "Battery Connector"
 		(exclude_from_sim no)
@@ -3731,7 +3731,7 @@
 	)
 	(hierarchical_label "USB_D-"
 		(shape bidirectional)
-		(at 96.52 110.49 0)
+		(at 95.25 113.03 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3755,7 +3755,7 @@
 	)
 	(hierarchical_label "USB_D+"
 		(shape bidirectional)
-		(at 96.52 113.03 0)
+		(at 95.25 110.49 0)
 		(fields_autoplaced yes)
 		(effects
 			(font

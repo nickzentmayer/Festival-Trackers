@@ -1104,6 +1104,42 @@
 		)
 		(uuid "4684215b-de45-4bf7-b4d2-5c6dae6c2a4d")
 	)
+	(hierarchical_label "CS_MAG"
+		(shape input)
+		(at 43.18 31.75 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4c552d93-0596-45dd-83cc-c7fd12ab81a2")
+	)
+	(hierarchical_label "CS_XL"
+		(shape input)
+		(at 29.21 31.75 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5c8e0748-b3e8-41a0-8b36-f7a129726232")
+	)
+	(hierarchical_label "SCL"
+		(shape input)
+		(at 119.38 99.06 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a46fd284-3199-4361-8812-aff32bbb8aa9")
+	)
 	(hierarchical_label "XL_INT0"
 		(shape output)
 		(at 167.64 91.44 0)
@@ -1116,9 +1152,45 @@
 		)
 		(uuid "b87f6e8d-4ace-4cae-b8a7-11198aa97043")
 	)
+	(hierarchical_label "CS_MAG"
+		(shape input)
+		(at 119.38 93.98 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bf7cb41a-78b9-4e27-9ea4-dd7831a7502d")
+	)
+	(hierarchical_label "CS_XL"
+		(shape input)
+		(at 119.38 91.44 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c4fd240a-8543-45c8-85e0-dac5b97bf961")
+	)
+	(hierarchical_label "SDA"
+		(shape bidirectional)
+		(at 119.38 104.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d0dd35b4-db69-4e76-b8fd-83221c4f36ad")
+	)
 	(hierarchical_label "SCL"
 		(shape bidirectional)
-		(at 63.5 34.29 180)
+		(at 63.5 34.29 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1130,7 +1202,7 @@
 	)
 	(hierarchical_label "SDA"
 		(shape bidirectional)
-		(at 78.74 34.29 180)
+		(at 78.74 34.29 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1139,51 +1211,6 @@
 			(justify right)
 		)
 		(uuid "ef2f1b5f-2e84-418b-93bb-4bd4dfca4c4f")
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 43.18 31.75 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "071a2169-bead-4935-945a-ef25174a3015")
-		(property "Netclass" "CS_MAG"
-			(at 43.8785 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 119.38 91.44 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "24e3da6e-0c4c-46e7-8e9e-8a689d42e57b")
-		(property "Netclass" "CS_XL"
-			(at 109.728 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
 	)
 	(netclass_flag ""
 		(length 2.54)
@@ -1210,73 +1237,6 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at 119.38 104.14 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "66218eaa-9b22-470d-9420-9ae3b2f9e255")
-		(property "Netclass" "SDA"
-			(at 111.76 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 119.38 93.98 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "70838964-f70b-4107-9d74-5cbe36704b67")
-		(property "Netclass" "CS_MAG"
-			(at 108.204 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 29.21 31.75 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ae05272b-ccd5-4e1c-8045-f647440a4132")
-		(property "Netclass" "CS_XL"
-			(at 29.9085 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
 		(at 78.74 31.75 270)
 		(effects
 			(font
@@ -1287,28 +1247,6 @@
 		(uuid "b4c035dc-bfc1-4353-978b-4648cf03727e")
 		(property "Netclass" "SDA"
 			(at 79.248 30.226 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 119.38 99.06 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f9ad7cba-9a95-42d5-b59b-b02b27ec649f")
-		(property "Netclass" "SCL"
-			(at 112.014 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
