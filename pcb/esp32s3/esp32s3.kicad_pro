@@ -497,13 +497,7 @@
     "net_colors": null,
     "netclass_assignments": {
       "SCL": "SDA",
-      "SDA": "SCL",
-      "unconnected-(R14-Pad2)": "CS_XL",
-      "unconnected-(R15-Pad2)": "CS_MAG",
-      "unconnected-(U8-CS_MAG-Pad3)": "CS_MAG",
-      "unconnected-(U8-CS_XL-Pad2)": "CS_XL",
-      "unconnected-(U8-SCL{slash}SPC-Pad1)": "SCL",
-      "unconnected-(U8-SDA{slash}SDI{slash}SDO-Pad4)": "SDA"
+      "SDA": "SCL"
     },
     "netclass_patterns": [
       {
@@ -517,7 +511,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "v0.1/",
+      "plot": "v0.2/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
