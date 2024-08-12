@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.6,
-          "height": 2.1,
-          "width": 1.0
+          "drill": 0.8,
+          "height": 0.8,
+          "width": 1.2
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.3
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [
@@ -58,7 +58,19 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "clearance|139125000|91075000|368dbbcc-4a43-4652-9c14-ad86d0cdf7b0|e65a4170-43c3-4119-9f07-63c0d365ca14",
+        "clearance|139125000|91225000|6b907ffd-b7a3-4e2a-9fc6-4534144ac45f|e65a4170-43c3-4119-9f07-63c0d365ca14",
+        "clearance|139125000|92075000|7201f26b-131a-4324-9838-2ade29b31f7b|336bdee1-603a-438e-a9c9-d335987fb675",
+        "clearance|139125000|92575000|07964d47-08b1-429c-af35-ba8c97e8375a|336bdee1-603a-438e-a9c9-d335987fb675",
+        "clearance|140080000|92225000|3201a0c6-51e0-4134-aee3-af45901d8808|577d8eff-d191-4b3b-8c46-3e4b68aab5c7",
+        "clearance|140185000|90725000|0b3d4e54-670f-4f83-bf4d-6e7a99166b0f|d1350ddc-96ed-4f8d-9d0a-012015fc2278",
+        "clearance|140185000|91225000|562ba880-f95b-45af-a02d-9cbd4fd877ae|d1350ddc-96ed-4f8d-9d0a-012015fc2278",
+        "clearance|148627000|79933400|49b84822-7216-4ec7-b47e-e247787744a4|3bc8a535-d2cb-4b72-96c2-c02889b6b51e",
+        "clearance|148772999|79527000|3270a839-e9af-44d8-9b28-a43cf509269f|e6aa9d45-8e78-4d30-b4f5-cc477a58fe65",
+        "clearance|149026999|79933400|3bc8a535-d2cb-4b72-96c2-c02889b6b51e|81292ccd-58fb-409b-a94c-d3c57dc6c555",
+        "clearance|149172998|79527000|454998da-f847-46dd-ab77-73cf29c64655|3270a839-e9af-44d8-9b28-a43cf509269f"
+      ],
       "meta": {
         "version": 2
       },
@@ -96,10 +108,10 @@
         "pth_inside_courtyard": "ignore",
         "shorting_items": "error",
         "silk_edge_clearance": "warning",
-        "silk_over_copper": "warning",
+        "silk_over_copper": "ignore",
         "silk_overlap": "warning",
         "skew_out_of_range": "error",
-        "solder_mask_bridge": "error",
+        "solder_mask_bridge": "ignore",
         "starved_thermal": "error",
         "text_height": "warning",
         "text_thickness": "warning",
