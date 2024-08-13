@@ -2523,301 +2523,6 @@
 				)
 			)
 		)
-		(symbol "Transistor_FET:DMG3414U"
-			(pin_names hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Q"
-				(at 5.08 1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "DMG3414U"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-				(at 5.08 -1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "http://www.diodes.com/assets/Datasheets/ds31739.pdf"
-				(at 5.08 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Description" "4.2A Id, 20V Vds, N-Channel MOSFET, SOT-23"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "N-Channel MOSFET"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOT?23*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "DMG3414U_0_1"
-				(polyline
-					(pts
-						(xy 0.254 0) (xy -2.54 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.254 1.905) (xy 0.254 -1.905)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 -1.27) (xy 0.762 -2.286)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 0.508) (xy 0.762 -0.508)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 2.286) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 2.54) (xy 2.54 1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 1.651 0)
-					(radius 2.794)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 2.54 -1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(circle
-					(center 2.54 1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-			)
-			(symbol "DMG3414U_1_1"
-				(pin input line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "power:+3V3"
 			(power)
 			(pin_numbers hide)
@@ -3522,12 +3227,6 @@
 		(uuid "127f901d-7598-4ec9-8f9b-ff85599eeb00")
 	)
 	(junction
-		(at 152.4 105.41)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "23183a91-340f-466f-81a4-e648f5d4bf31")
-	)
-	(junction
 		(at 66.04 45.72)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3558,6 +3257,12 @@
 		(uuid "57359540-f736-4a66-9904-6d22f2ae8779")
 	)
 	(junction
+		(at 30.48 48.26)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5d6ab313-073b-46b3-819b-1f87ca8035a5")
+	)
+	(junction
 		(at 91.44 127)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3570,12 +3275,6 @@
 		(uuid "63f3a3cf-8149-40d8-9726-85b73fa3d239")
 	)
 	(junction
-		(at 149.86 93.98)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "7213caa4-2bf4-40f7-bed7-8452b920ed48")
-	)
-	(junction
 		(at 274.32 134.62)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3586,12 +3285,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "89b7c01c-403a-415e-a325-b07e3b67f6e1")
-	)
-	(junction
-		(at 33.02 27.94)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8f1a9b25-468f-4d68-8c6f-df309c98de77")
 	)
 	(junction
 		(at 256.54 129.54)
@@ -3628,12 +3321,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d2130304-d8bf-4535-af30-63853c6b5733")
-	)
-	(junction
-		(at 152.4 93.98)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d9c3ce3a-92d7-40c2-b694-0a337601b8f8")
 	)
 	(junction
 		(at 220.98 33.02)
@@ -3689,6 +3376,16 @@
 	)
 	(wire
 		(pts
+			(xy 26.67 54.61) (xy 30.48 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03fefd64-97af-42a5-a756-c982a849d017")
+	)
+	(wire
+		(pts
 			(xy 256.54 129.54) (xy 256.54 130.81)
 		)
 		(stroke
@@ -3729,13 +3426,13 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 105.41) (xy 152.4 105.41)
+			(xy 33.02 33.02) (xy 33.02 48.26)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "178a73c4-f601-499f-b2d4-992c450b8924")
+		(uuid "17d6c814-0de3-46e1-87a5-4072626e46af")
 	)
 	(wire
 		(pts
@@ -3909,16 +3606,6 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 96.52) (xy 152.4 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f3f160b-7f8b-41ac-8aa3-0a27d62a7892")
-	)
-	(wire
-		(pts
 			(xy 220.98 33.02) (xy 220.98 40.64)
 		)
 		(stroke
@@ -3936,16 +3623,6 @@
 			(type default)
 		)
 		(uuid "36919063-cfb5-4f20-bf64-b2b02996a784")
-	)
-	(polyline
-		(pts
-			(xy 130.81 59.69) (xy 130.81 109.855)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "37addba3-89d9-44d8-b81a-f058145d912e")
 	)
 	(wire
 		(pts
@@ -4099,6 +3776,16 @@
 	)
 	(wire
 		(pts
+			(xy 30.48 48.26) (xy 30.48 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "67abb8b4-3dd8-44fc-a3fc-f05d758ab71e")
+	)
+	(wire
+		(pts
 			(xy 64.77 45.72) (xy 66.04 45.72)
 		)
 		(stroke
@@ -4116,6 +3803,16 @@
 			(type default)
 		)
 		(uuid "6ad5c148-0c59-4638-86a0-2d699a0356dd")
+	)
+	(wire
+		(pts
+			(xy 33.02 48.26) (xy 30.48 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6c2c46fa-6f7a-4543-acd1-a6d94aea6d4b")
 	)
 	(wire
 		(pts
@@ -4179,16 +3876,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 87.63) (xy 149.86 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "75b83721-f1f1-4894-828d-fe8471732ecb")
-	)
-	(wire
-		(pts
 			(xy 105.41 120.65) (xy 107.95 120.65)
 		)
 		(stroke
@@ -4236,16 +3923,6 @@
 			(type default)
 		)
 		(uuid "7abffa42-69e5-4b1b-afde-9c0d76cc3e9b")
-	)
-	(wire
-		(pts
-			(xy 146.05 105.41) (xy 152.4 105.41)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "85c86278-cb49-4da3-8a27-a166b206cb2d")
 	)
 	(wire
 		(pts
@@ -4299,26 +3976,6 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 93.98) (xy 149.86 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "93372163-3943-411e-8bfc-0e795ed0f6d6")
-	)
-	(wire
-		(pts
-			(xy 152.4 93.98) (xy 153.67 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9a5ede64-0982-4ca3-8acb-22bcce070a5c")
-	)
-	(wire
-		(pts
 			(xy 110.49 111.76) (xy 110.49 113.03)
 		)
 		(stroke
@@ -4336,16 +3993,6 @@
 			(type default)
 		)
 		(uuid "9c56c804-fbd4-4233-9123-8f5a6970c94a")
-	)
-	(polyline
-		(pts
-			(xy 191.135 109.855) (xy 130.81 109.855)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d3e89b9-8edf-4264-9e81-6faaea73e49f")
 	)
 	(wire
 		(pts
@@ -4449,16 +4096,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 93.98) (xy 152.4 93.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ad9486e1-a04a-4213-a38b-c17d24c2704a")
-	)
-	(wire
-		(pts
 			(xy 232.41 29.21) (xy 233.68 29.21)
 		)
 		(stroke
@@ -4529,26 +4166,6 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 33.02) (xy 33.02 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b9de579b-2265-425d-b89e-183d7a3cba51")
-	)
-	(wire
-		(pts
-			(xy 161.29 99.06) (xy 161.29 105.41)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ba24c7f6-a04f-4200-93bb-17d74c4364ae")
-	)
-	(wire
-		(pts
 			(xy 138.43 40.64) (xy 138.43 46.99)
 		)
 		(stroke
@@ -4596,16 +4213,6 @@
 			(type default)
 		)
 		(uuid "c6947eca-e964-4de6-82d4-79d01153315c")
-	)
-	(wire
-		(pts
-			(xy 152.4 105.41) (xy 152.4 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c6abbeab-0889-421f-9f2c-39dcd03be943")
 	)
 	(polyline
 		(pts
@@ -4767,16 +4374,6 @@
 		)
 		(uuid "618cb12f-a817-43c3-8138-d3600a668098")
 	)
-	(text "Main Power Switch\n"
-		(exclude_from_sim no)
-		(at 141.224 62.23 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "6b323374-e02d-47b7-bd69-31d95b6ef130")
-	)
 	(text "USB + ESD Protection"
 		(exclude_from_sim no)
 		(at 29.972 67.056 0)
@@ -4827,31 +4424,9 @@
 		)
 		(uuid "f3116ead-309b-46a1-b530-cdf865cf181b")
 	)
-	(global_label "LDO_OUT"
+	(global_label "LDO_EN"
 		(shape input)
-		(at 80.01 25.4 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "08aa3c24-d621-4f61-8af8-ba69c47428f6")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 80.01 14.19 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "LDO_OUT"
-		(shape input)
-		(at 146.05 105.41 180)
+		(at 26.67 54.61 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4859,9 +4434,9 @@
 			)
 			(justify right)
 		)
-		(uuid "4510d992-c7bc-469b-8c3f-7dd0de6bd570")
+		(uuid "78ca96b5-feb6-40e3-b318-2ee1f9477eae")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 134.84 105.41 0)
+			(at 16.6091 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4873,7 +4448,7 @@
 	)
 	(global_label "BTN"
 		(shape input)
-		(at 142.24 87.63 180)
+		(at 22.86 48.26 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4881,31 +4456,9 @@
 			)
 			(justify right)
 		)
-		(uuid "75338426-1124-4434-914a-1d8bf163d73e")
+		(uuid "8c0955db-136c-429f-8523-3f5dfda14873")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 135.6867 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "PWR_ON"
-		(shape input)
-		(at 146.05 93.98 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "af89ebe2-e96d-41e6-b7b8-fa5fa86c4eda")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 135.4448 93.98 0)
+			(at 16.3067 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5201,6 +4754,72 @@
 			(project "stm32h7"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
 					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 80.01 25.4 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0823edd2-cb87-44f5-a57d-455327626930")
+		(property "Reference" "#PWR060"
+			(at 80.01 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 80.01 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 80.01 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.01 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 80.01 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "efa3e78f-3dd7-4509-b9fc-357885a4eb6f")
+		)
+		(instances
+			(project "stm32h7"
+				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
@@ -5735,72 +5354,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 161.29 88.9 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3281ea1f-4eb3-4f15-88f4-f474cd9e6673")
-		(property "Reference" "#PWR060"
-			(at 161.29 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 161.29 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 161.29 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 161.29 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 161.29 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "cece0e9e-d6e1-48b4-bc90-65934b69f9f6")
-		)
-		(instances
-			(project "stm32h7"
-				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
-					(reference "#PWR060")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "DMG3415U-7:DMG3415U-7")
 		(at 243.84 30.48 0)
 		(unit 1)
@@ -6052,75 +5605,6 @@
 			(project "stm32h7"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
 					(reference "#PWR018")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 152.4 100.33 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3eef2cf5-bd4a-4312-baa9-108dff5fcb39")
-		(property "Reference" "R11"
-			(at 153.924 99.314 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 153.924 101.854 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 153.416 100.584 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 152.4 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 152.4 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "029ecd6e-5e9f-4c07-92ea-5253ed035b06")
-		)
-		(pin "1"
-			(uuid "66752991-dc92-4dd5-b39b-bb130aa03750")
-		)
-		(instances
-			(project "stm32h7"
-				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
-					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -6615,82 +6099,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:DMG3414U")
-		(at 158.75 93.98 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "84f39253-3985-444c-b3a8-18e0dc13e9ac")
-		(property "Reference" "Q2"
-			(at 165.1 92.7099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "IRLML2244"
-			(at 165.1 95.2499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 163.83 95.885 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 163.83 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "P-Channel MOSFET"
-			(at 158.75 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "4d5be4a0-88f3-453d-9aa0-8b1172049321")
-		)
-		(pin "1"
-			(uuid "4c4d3ccd-cf03-4b49-aedb-a922e3c31fdc")
-		)
-		(pin "2"
-			(uuid "def034fa-e6aa-49cb-ba12-5b98abaa7a86")
-		)
-		(instances
-			(project "stm32h7"
-				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
-					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 274.32 152.4 0)
 		(unit 1)
@@ -6858,6 +6266,74 @@
 			(project "stm32h7"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
 					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Diode:MBR0540")
+		(at 26.67 48.26 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8f31a68a-b76e-45b0-9f09-968027cb86c3")
+		(property "Reference" "D4"
+			(at 26.9875 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MBR0540"
+			(at 26.9875 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-123"
+			(at 26.67 43.815 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.mccsemi.com/up_pdf/MBR0520~MBR0580(SOD123).pdf"
+			(at 26.67 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "40V 0.5A Schottky Power Rectifier Diode, SOD-123"
+			(at 26.67 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "0277d99a-97fa-4209-8ba3-697f482ce25e")
+		)
+		(pin "1"
+			(uuid "9c79f47a-f94d-43b3-a0df-b3703b71075f")
+		)
+		(instances
+			(project "stm32h7"
+				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -7800,74 +7276,6 @@
 			(project "stm32h7"
 				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
 					(reference "C3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:MBR0540")
-		(at 146.05 87.63 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fdbb1696-0d14-4f94-8103-6532dd2256d5")
-		(property "Reference" "D4"
-			(at 145.7325 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "MBR0540"
-			(at 145.7325 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 146.05 92.075 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.mccsemi.com/up_pdf/MBR0520~MBR0580(SOD123).pdf"
-			(at 146.05 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "40V 0.5A Schottky Power Rectifier Diode, SOD-123"
-			(at 146.05 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "dc4a4e5c-4b2c-48d3-8153-2e91cf1e536c")
-		)
-		(pin "1"
-			(uuid "06178be2-73b6-46ae-8c13-c9417cdcaee4")
-		)
-		(instances
-			(project "stm32h7"
-				(path "/834edf73-57a5-43b4-ab36-0b077e93e6d5/ae5309e0-349d-45c3-b1b4-6edffcac73ca"
-					(reference "D4")
 					(unit 1)
 				)
 			)
