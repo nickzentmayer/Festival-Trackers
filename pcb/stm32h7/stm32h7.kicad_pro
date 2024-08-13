@@ -59,13 +59,6 @@
         }
       ],
       "drc_exclusions": [
-        "clearance|139125000|91075000|368dbbcc-4a43-4652-9c14-ad86d0cdf7b0|e65a4170-43c3-4119-9f07-63c0d365ca14",
-        "clearance|139125000|91225000|6b907ffd-b7a3-4e2a-9fc6-4534144ac45f|e65a4170-43c3-4119-9f07-63c0d365ca14",
-        "clearance|139125000|92075000|7201f26b-131a-4324-9838-2ade29b31f7b|336bdee1-603a-438e-a9c9-d335987fb675",
-        "clearance|139125000|92575000|07964d47-08b1-429c-af35-ba8c97e8375a|336bdee1-603a-438e-a9c9-d335987fb675",
-        "clearance|140080000|92225000|3201a0c6-51e0-4134-aee3-af45901d8808|577d8eff-d191-4b3b-8c46-3e4b68aab5c7",
-        "clearance|140185000|90725000|0b3d4e54-670f-4f83-bf4d-6e7a99166b0f|d1350ddc-96ed-4f8d-9d0a-012015fc2278",
-        "clearance|140185000|91225000|562ba880-f95b-45af-a02d-9cbd4fd877ae|d1350ddc-96ed-4f8d-9d0a-012015fc2278",
         "clearance|148627000|79933400|49b84822-7216-4ec7-b47e-e247787744a4|3bc8a535-d2cb-4b72-96c2-c02889b6b51e",
         "clearance|148772999|79527000|3270a839-e9af-44d8-9b28-a43cf509269f|e6aa9d45-8e78-4d30-b4f5-cc477a58fe65",
         "clearance|149026999|79933400|3bc8a535-d2cb-4b72-96c2-c02889b6b51e|81292ccd-58fb-409b-a94c-d3c57dc6c555",
@@ -507,10 +500,7 @@
       "version": 3
     },
     "net_colors": null,
-    "netclass_assignments": {
-      "SCL": "SDA",
-      "SDA": "SCL"
-    },
+    "netclass_assignments": null,
     "netclass_patterns": [
       {
         "netclass": "Default",
