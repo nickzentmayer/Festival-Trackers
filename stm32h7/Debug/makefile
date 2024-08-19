@@ -52,6 +52,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 stm32h7.list \
 
+OBJCOPY_BIN += \
+stm32h7.bin \
+
 
 # All Target
 all: main-build
@@ -75,12 +78,17 @@ stm32h7.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+stm32h7.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "stm32h7.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout stm32h7.elf stm32h7.list stm32h7.map
+	-$(RM) default.size.stdout stm32h7.bin stm32h7.elf stm32h7.list stm32h7.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

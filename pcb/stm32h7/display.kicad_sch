@@ -3391,7 +3391,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "100R"
 			(at 123.444 73.152 90)
 			(effects
 				(font

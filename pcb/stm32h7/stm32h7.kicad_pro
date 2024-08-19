@@ -186,6 +186,7 @@
         0.1,
         0.156464,
         0.2,
+        0.25,
         0.35
       ],
       "tuning_pattern_settings": {
@@ -513,7 +514,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "v0.2/",
+      "plot": "v0.3/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
@@ -529,8 +530,8 @@
       "field_delimiter": ",",
       "keep_line_breaks": false,
       "keep_tabs": false,
-      "name": "CSV",
-      "ref_delimiter": ",",
+      "name": "---",
+      "ref_delimiter": "+",
       "ref_range_delimiter": "",
       "string_delimiter": "\""
     },

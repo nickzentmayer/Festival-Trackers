@@ -481,26 +481,26 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
  800067a:	2302      	movs	r3, #2
  800067c:	64fb      	str	r3, [r7, #76]	@ 0x4c
-  RCC_OscInitStruct.PLL.PLLM = 2;
- 800067e:	2302      	movs	r3, #2
+  RCC_OscInitStruct.PLL.PLLM = 5;
+ 800067e:	2305      	movs	r3, #5
  8000680:	653b      	str	r3, [r7, #80]	@ 0x50
-  RCC_OscInitStruct.PLL.PLLN = 12;
- 8000682:	230c      	movs	r3, #12
+  RCC_OscInitStruct.PLL.PLLN = 48;
+ 8000682:	2330      	movs	r3, #48	@ 0x30
  8000684:	657b      	str	r3, [r7, #84]	@ 0x54
   RCC_OscInitStruct.PLL.PLLP = 2;
  8000686:	2302      	movs	r3, #2
  8000688:	65bb      	str	r3, [r7, #88]	@ 0x58
-  RCC_OscInitStruct.PLL.PLLQ = 3;
- 800068a:	2303      	movs	r3, #3
+  RCC_OscInitStruct.PLL.PLLQ = 5;
+ 800068a:	2305      	movs	r3, #5
  800068c:	65fb      	str	r3, [r7, #92]	@ 0x5c
   RCC_OscInitStruct.PLL.PLLR = 2;
  800068e:	2302      	movs	r3, #2
  8000690:	663b      	str	r3, [r7, #96]	@ 0x60
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
- 8000692:	230c      	movs	r3, #12
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
+ 8000692:	2308      	movs	r3, #8
  8000694:	667b      	str	r3, [r7, #100]	@ 0x64
-  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOMEDIUM;
- 8000696:	2302      	movs	r3, #2
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+ 8000696:	2300      	movs	r3, #0
  8000698:	66bb      	str	r3, [r7, #104]	@ 0x68
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
  800069a:	2300      	movs	r3, #0
@@ -842,8 +842,8 @@ static void MX_LTDC_Init(void)
   pLayerCfg1.WindowY1 = 0;
  800087e:	2300      	movs	r3, #0
  8000880:	60fb      	str	r3, [r7, #12]
-  pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
- 8000882:	2302      	movs	r3, #2
+  pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+ 8000882:	2300      	movs	r3, #0
  8000884:	613b      	str	r3, [r7, #16]
   pLayerCfg1.Alpha = 0;
  8000886:	2300      	movs	r3, #0
@@ -1886,7 +1886,7 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOMEDIUM;
  8000eb0:	f44f 7300 	mov.w	r3, #512	@ 0x200
  8000eb4:	663b      	str	r3, [r7, #96]	@ 0x60
-    PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
+    PeriphClkInitStruct.PLL3.PLL3FRACN = 0.0;
  8000eb6:	2300      	movs	r3, #0
  8000eb8:	667b      	str	r3, [r7, #100]	@ 0x64
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
