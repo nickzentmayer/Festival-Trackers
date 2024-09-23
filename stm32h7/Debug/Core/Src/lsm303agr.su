@@ -1,0 +1,4 @@
+../Core/Src/lsm303agr.c:10:19:LSM303AGR_Init	40	static
+../Core/Src/lsm303agr.c:27:19:LSM303AGR_ReadAccel	40	static
+../Core/Src/lsm303agr.c:42:19:LSM303AGR_ReadMag	40	static
+../Core/Src/lsm303agr.c:56:19:LSM303AGR_ReadRegister	40	static

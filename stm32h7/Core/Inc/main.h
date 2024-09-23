@@ -49,6 +49,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -87,7 +89,7 @@ void Error_Handler(void);
 #define BATT_STAT_GPIO_Port GPIOD
 #define FG_NALERT_Pin GPIO_PIN_5
 #define FG_NALERT_GPIO_Port GPIOD
-#define GPS_ON_Pin GPIO_PIN_7
+#define GPS_ON_Pin GPIO_PIN_5
 #define GPS_ON_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */

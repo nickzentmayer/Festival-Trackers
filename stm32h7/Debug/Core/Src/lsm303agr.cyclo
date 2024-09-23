@@ -1,0 +1,4 @@
+../Core/Src/lsm303agr.c:10:19:LSM303AGR_Init	3
+../Core/Src/lsm303agr.c:27:19:LSM303AGR_ReadAccel	2
+../Core/Src/lsm303agr.c:42:19:LSM303AGR_ReadMag	2
+../Core/Src/lsm303agr.c:56:19:LSM303AGR_ReadRegister	1

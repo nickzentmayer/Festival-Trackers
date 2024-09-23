@@ -18,9 +18,18 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
+#include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include <stdbool.h>
+#include "lsm303agr.h"
+#include "gps_tools.h"
+#include "max17048.h"
+#include "usbd_cdc_if.h"
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -32,6 +41,8 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+#define GGA_BUFFER_SIZE 100
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,6 +53,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 I2C_HandleTypeDef hi2c4;
+DMA_HandleTypeDef hdma_i2c4_rx;
+DMA_HandleTypeDef hdma_i2c4_tx;
 
 LTDC_HandleTypeDef hltdc;
 
@@ -49,10 +62,17 @@ QSPI_HandleTypeDef hqspi;
 
 SPI_HandleTypeDef hspi1;
 
+TIM_HandleTypeDef htim1;
+
 UART_HandleTypeDef huart8;
 
-PCD_HandleTypeDef hpcd_USB_OTG_FS;
-
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -61,18 +81,59 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_BDMA_Init(void);
 static void MX_LTDC_Init(void);
 static void MX_SPI1_Init(void);
-static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_I2C4_Init(void);
 static void MX_QUADSPI_Init(void);
+static void MX_TIM1_Init(void);
 static void MX_UART8_Init(void);
+void StartDefaultTask(void *argument);
+
 /* USER CODE BEGIN PFP */
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+static void Blink_PC4(void);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+// Define frame buffer location
+#define FRAMEBUFFER_ADDRESS  ((uint16_t*)0x08100000)  // Adjust to the correct SDRAM address
+#define DISPLAY_WIDTH        480
+#define DISPLAY_HEIGHT       480
+#define COLOR_BLUE           0x001F  // 16-bit RGB color: Blue
+
+// Assuming LTDC and frame buffer are already initialized
+LTDC_HandleTypeDef hltdc;
+
+void Display_Init(void) {
+    // Fill the screen with a solid color
+    for (uint32_t y = 0; y < DISPLAY_HEIGHT; y++) {
+        for (uint32_t x = 0; x < DISPLAY_WIDTH; x++) {
+            FRAMEBUFFER_ADDRESS[y * DISPLAY_WIDTH + x] = COLOR_BLUE;
+        }
+    }
+
+    // Trigger LTDC to refresh the display
+    HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);  // Assuming hltdc is the LTDC handle
+}
+
+int _write(int file, char *ptr, int len) {
+    CDC_Transmit_FS((uint8_t*)ptr, len);  // Transmit data via USB CDC
+    return len;
+}
+
+LSM303AGR_AccelData accel_data;
+LSM303AGR_MagData mag_data;
+
+uint8_t rx_buffer[1];     // Buffer for receiving data via interrupt
+char gga_buffer[GGA_BUFFER_SIZE]; // Larger buffer to store the accumulated data
+uint8_t gga_index = 0;  // Index to keep track of the current position in data_buffer
+
+GPS_Data gps_data;
 
 /* USER CODE END 0 */
 
@@ -108,15 +169,67 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_BDMA_Init();
   MX_LTDC_Init();
   MX_SPI1_Init();
-  MX_USB_OTG_FS_PCD_Init();
   MX_I2C4_Init();
   MX_QUADSPI_Init();
+  MX_TIM1_Init();
   MX_UART8_Init();
   /* USER CODE BEGIN 2 */
+  MX_USB_DEVICE_Init();          // Initialize USB CDC
+
+  // start receiving data on UART8 via interrupt, one byte at a time
+  HAL_UART_Receive_IT(&huart8, (uint8_t*)rx_buffer, 1);
+
+  LSM303AGR_Init(&hi2c4);
+
+//  HAL_GPIO_WritePin(GPIOB, GPS_ON_Pin, GPIO_PIN_SET);
+
+  // Start PWM output on TIM1 Channel 1
+//  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
+//  {
+//	  // Initialization Error
+//	  Error_Handler();
+//  }
 
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -403,6 +516,86 @@ static void MX_SPI1_Init(void)
 }
 
 /**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 1;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 7999;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+  sBreakDeadTimeConfig.DeadTime = 0;
+  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+  sBreakDeadTimeConfig.BreakFilter = 0;
+  sBreakDeadTimeConfig.Break2State = TIM_BREAK2_DISABLE;
+  sBreakDeadTimeConfig.Break2Polarity = TIM_BREAK2POLARITY_HIGH;
+  sBreakDeadTimeConfig.Break2Filter = 0;
+  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+  if (HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBreakDeadTimeConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+  HAL_TIM_MspPostInit(&htim1);
+
+}
+
+/**
   * @brief UART8 Initialization Function
   * @param None
   * @retval None
@@ -451,38 +644,21 @@ static void MX_UART8_Init(void)
 }
 
 /**
-  * @brief USB_OTG_FS Initialization Function
-  * @param None
-  * @retval None
+  * Enable DMA controller clock
   */
-static void MX_USB_OTG_FS_PCD_Init(void)
+static void MX_BDMA_Init(void)
 {
 
-  /* USER CODE BEGIN USB_OTG_FS_Init 0 */
+  /* DMA controller clock enable */
+  __HAL_RCC_BDMA_CLK_ENABLE();
 
-  /* USER CODE END USB_OTG_FS_Init 0 */
-
-  /* USER CODE BEGIN USB_OTG_FS_Init 1 */
-
-  /* USER CODE END USB_OTG_FS_Init 1 */
-  hpcd_USB_OTG_FS.Instance = USB_OTG_FS;
-  hpcd_USB_OTG_FS.Init.dev_endpoints = 9;
-  hpcd_USB_OTG_FS.Init.speed = PCD_SPEED_FULL;
-  hpcd_USB_OTG_FS.Init.dma_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
-  hpcd_USB_OTG_FS.Init.Sof_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.low_power_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.lpm_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.battery_charging_enable = ENABLE;
-  hpcd_USB_OTG_FS.Init.vbus_sensing_enable = ENABLE;
-  hpcd_USB_OTG_FS.Init.use_dedicated_ep1 = DISABLE;
-  if (HAL_PCD_Init(&hpcd_USB_OTG_FS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_OTG_FS_Init 2 */
-
-  /* USER CODE END USB_OTG_FS_Init 2 */
+  /* DMA interrupt init */
+  /* BDMA_Channel0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
+  /* BDMA_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BDMA_Channel1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(BDMA_Channel1_IRQn);
 
 }
 
@@ -512,7 +688,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(TP_PC4_GPIO_Port, TP_PC4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, LCD_BL_Pin|LCD_RST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LORA_RST_Pin|GPS_ON_Pin, GPIO_PIN_RESET);
@@ -537,12 +713,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BTN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LCD_BL_Pin LCD_RST_Pin */
-  GPIO_InitStruct.Pin = LCD_BL_Pin|LCD_RST_Pin;
+  /*Configure GPIO pin : LCD_RST_Pin */
+  GPIO_InitStruct.Pin = LCD_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  HAL_GPIO_Init(LCD_RST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LORA_RST_Pin GPS_ON_Pin */
   GPIO_InitStruct.Pin = LORA_RST_Pin|GPS_ON_Pin;
@@ -576,12 +752,97 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /*Configure GPIO pin : PE9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;    // Alternate Function Push-Pull
+  GPIO_InitStruct.Pull = GPIO_NOPULL;        // No Pull-up or Pull-down
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW; // Adjust speed as needed
+  GPIO_InitStruct.Alternate = GPIO_AF1_TIM1; // TIM1_CH1 is mapped to AF1
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
 
+void Blink_PC4(void) {
+    HAL_GPIO_WritePin(GPIOC, TP_PC4_Pin, GPIO_PIN_SET);
+    HAL_Delay(100);
+    HAL_GPIO_WritePin(GPIOC, TP_PC4_Pin, GPIO_PIN_RESET);
+    HAL_Delay(100);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if (rx_buffer[0] == '$') {
+		// Start of a new GGA sentence, reset the index
+		gga_index = 0;
+	} else if (rx_buffer[0] == '\r') {
+		// End of GGA sentence
+
+//		if (gga_index < GGA_BUFFER_SIZE) {
+//			gga_buffer[gga_index] = '\0'; // Null-terminate for string processing
+//		}
+
+		// Process the complete GGA sentence
+		bool success = Process_GGA_Sentence(gga_buffer, &gps_data);
+		if (success) Blink_PC4();
+
+		// Reset the index to start a new sentence
+		gga_index = 0;
+	} else if (gga_index < GGA_BUFFER_SIZE) {
+		// accumulate the received character if we haven't reached the buffer size
+		gga_buffer[gga_index++] = rx_buffer[0];
+	} else {
+		// there's something wrong, reset the index to 0 to start the data buffer over
+		gga_index = 0;
+	}
+
+	// re-enable the interrupt to receive the next byte
+	HAL_UART_Receive_IT(huart, rx_buffer, 1);
+}
+
+double factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* init code for USB_DEVICE */
+  MX_USB_DEVICE_Init();
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+	for(;;)
+	{
+//		if (LSM303AGR_ReadAccel(&hi2c4, &accel_data) == HAL_OK) {
+//			Blink_PC4();
+//		} else {
+//			Blink_PC4();
+//			Blink_PC4();
+//		}
+		MAX17048_BatteryData battery_data;
+		if (MAX17048_Read_Battery(&hi2c4, &battery_data) == HAL_OK) {
+			Blink_PC4();
+			printf("state of charge: %d%%\r\n", (int)battery_data.soc);
+			printf("charge rate: %d%%/hour\r\n", (int)battery_data.chg_rate);
+
+		} else {
+			Blink_PC4();
+			Blink_PC4();
+		}
+		HAL_Delay(600);
+	}
+  /* USER CODE END 5 */
+}
 
  /* MPU Configuration */
 
@@ -610,6 +871,27 @@ void MPU_Config(void)
   /* Enables the MPU */
   HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM2 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM2) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
 }
 
 /**
