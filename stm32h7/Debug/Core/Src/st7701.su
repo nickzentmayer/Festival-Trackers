@@ -1,0 +1,3 @@
+../Core/Src/st7701.c:16:19:ST7701_SendCommand	24	static
+../Core/Src/st7701.c:22:19:ST7701_SendData	24	static
+../Core/Src/st7701.c:28:19:ST7701_Init	24	static

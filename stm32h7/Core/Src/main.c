@@ -30,6 +30,7 @@
 #include "max17048.h"
 #include "usbd_cdc_if.h"
 #include <stdio.h>
+#include "st7701.h"
 
 /* USER CODE END Includes */
 
@@ -75,6 +76,8 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+uint16_t framebuffer[480*480];  //16 bpp framebuffer
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,8 +103,6 @@ static void Blink_PC4(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-// Define frame buffer location
-#define FRAMEBUFFER_ADDRESS  ((uint16_t*)0x08100000)  // Adjust to the correct SDRAM address
 #define DISPLAY_WIDTH        480
 #define DISPLAY_HEIGHT       480
 #define COLOR_BLUE           0x001F  // 16-bit RGB color: Blue
@@ -113,7 +114,7 @@ void Display_Init(void) {
     // Fill the screen with a solid color
     for (uint32_t y = 0; y < DISPLAY_HEIGHT; y++) {
         for (uint32_t x = 0; x < DISPLAY_WIDTH; x++) {
-            FRAMEBUFFER_ADDRESS[y * DISPLAY_WIDTH + x] = COLOR_BLUE;
+            framebuffer[y * DISPLAY_WIDTH + x] = COLOR_BLUE;
         }
     }
 
@@ -183,15 +184,26 @@ int main(void)
   HAL_UART_Receive_IT(&huart8, (uint8_t*)rx_buffer, 1);
 
   LSM303AGR_Init(&hi2c4);
+  HAL_LTDC_SetAddress(&hltdc, (uint32_t)framebuffer, LTDC_LAYER_1);
+//  Display_Init();
+  HAL_StatusTypeDef st7701_init_status = ST7701_Init(&hspi1);
+  if (st7701_init_status != HAL_OK) {
+	  printf("st7701 initialization failed!\n");
+  } else {
+	  printf("st7701 initialized! setting framebuffer to blue\n");
+	  Display_Init();
+  }
+  fflush(stdout);
 
 //  HAL_GPIO_WritePin(GPIOB, GPS_ON_Pin, GPIO_PIN_SET);
 
-  // Start PWM output on TIM1 Channel 1
-//  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
-//  {
-//	  // Initialization Error
-//	  Error_Handler();
-//  }
+//   Start PWM output on TIM1 Channel 1
+  if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1) != HAL_OK)
+  {
+	  // Initialization Error
+	  Error_Handler();
+  }
+
 
   /* USER CODE END 2 */
 
@@ -264,19 +276,21 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_HSI
+                              |RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 5;
-  RCC_OscInitStruct.PLL.PLLN = 48;
+  RCC_OscInitStruct.PLL.PLLM = 2;
+  RCC_OscInitStruct.PLL.PLLN = 12;
   RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 5;
+  RCC_OscInitStruct.PLL.PLLQ = 3;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
-  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOMEDIUM;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -363,7 +377,6 @@ static void MX_LTDC_Init(void)
   /* USER CODE END LTDC_Init 0 */
 
   LTDC_LayerCfgTypeDef pLayerCfg = {0};
-  LTDC_LayerCfgTypeDef pLayerCfg1 = {0};
 
   /* USER CODE BEGIN LTDC_Init 1 */
 
@@ -373,14 +386,14 @@ static void MX_LTDC_Init(void)
   hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
   hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
   hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-  hltdc.Init.HorizontalSync = 7;
-  hltdc.Init.VerticalSync = 3;
-  hltdc.Init.AccumulatedHBP = 14;
-  hltdc.Init.AccumulatedVBP = 5;
-  hltdc.Init.AccumulatedActiveW = 494;
-  hltdc.Init.AccumulatedActiveH = 485;
-  hltdc.Init.TotalWidth = 500;
-  hltdc.Init.TotalHeigh = 487;
+  hltdc.Init.HorizontalSync = 24;
+  hltdc.Init.VerticalSync = 7;
+  hltdc.Init.AccumulatedHBP = 54;
+  hltdc.Init.AccumulatedVBP = 27;
+  hltdc.Init.AccumulatedActiveW = 534;
+  hltdc.Init.AccumulatedActiveH = 507;
+  hltdc.Init.TotalWidth = 538;
+  hltdc.Init.TotalHeigh = 522;
   hltdc.Init.Backcolor.Blue = 0;
   hltdc.Init.Backcolor.Green = 0;
   hltdc.Init.Backcolor.Red = 0;
@@ -389,40 +402,21 @@ static void MX_LTDC_Init(void)
     Error_Handler();
   }
   pLayerCfg.WindowX0 = 0;
-  pLayerCfg.WindowX1 = 0;
+  pLayerCfg.WindowX1 = 480;
   pLayerCfg.WindowY0 = 0;
-  pLayerCfg.WindowY1 = 0;
+  pLayerCfg.WindowY1 = 480;
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
-  pLayerCfg.Alpha = 0;
-  pLayerCfg.Alpha0 = 0;
+  pLayerCfg.Alpha = 255;
+  pLayerCfg.Alpha0 = 150;
   pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
   pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-  pLayerCfg.FBStartAdress = 0;
-  pLayerCfg.ImageWidth = 0;
-  pLayerCfg.ImageHeight = 0;
-  pLayerCfg.Backcolor.Blue = 0;
+  pLayerCfg.FBStartAdress = 0x08100000;
+  pLayerCfg.ImageWidth = 480;
+  pLayerCfg.ImageHeight = 480;
+  pLayerCfg.Backcolor.Blue = 255;
   pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
   if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  pLayerCfg1.WindowX0 = 0;
-  pLayerCfg1.WindowX1 = 0;
-  pLayerCfg1.WindowY0 = 0;
-  pLayerCfg1.WindowY1 = 0;
-  pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-  pLayerCfg1.Alpha = 0;
-  pLayerCfg1.Alpha0 = 0;
-  pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-  pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-  pLayerCfg1.FBStartAdress = 0;
-  pLayerCfg1.ImageWidth = 0;
-  pLayerCfg1.ImageHeight = 0;
-  pLayerCfg1.Backcolor.Blue = 0;
-  pLayerCfg1.Backcolor.Green = 0;
-  pLayerCfg1.Backcolor.Red = 0;
-  if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -536,9 +530,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 1;
+  htim1.Init.Prescaler = 63;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 7999;
+  htim1.Init.Period = 999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -682,7 +676,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, TP_PA2_Pin|LCD_CS_Pin|LORA_NSS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, TP_PA2_Pin|LORA_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(TP_PC4_GPIO_Port, TP_PC4_Pin, GPIO_PIN_RESET);
@@ -693,8 +687,11 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LORA_RST_Pin|GPS_ON_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : TP_PA2_Pin LCD_CS_Pin LORA_NSS_Pin */
-  GPIO_InitStruct.Pin = TP_PA2_Pin|LCD_CS_Pin|LORA_NSS_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pins : TP_PA2_Pin LORA_NSS_Pin */
+  GPIO_InitStruct.Pin = TP_PA2_Pin|LORA_NSS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -744,6 +741,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LCD_CS_Pin */
+  GPIO_InitStruct.Pin = LCD_CS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LCD_CS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BATT_STAT_Pin FG_NALERT_Pin */
   GPIO_InitStruct.Pin = BATT_STAT_Pin|FG_NALERT_Pin;
@@ -806,6 +810,24 @@ double factorial(int n) {
     return n * factorial(n - 1);
 }
 
+void LCD_Clear(uint16_t color)
+{
+    uint32_t x, y;
+
+    for (y = 0; y < 480; y++)
+    {
+        for (x = 0; x < 480; x++)
+        {
+            framebuffer[y * 480 + x] = color;
+        }
+    }
+
+    /* Ensure data is written by flushing the data cache */
+    SCB_CleanInvalidateDCache();
+}
+
+
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -829,17 +851,26 @@ void StartDefaultTask(void *argument)
 //			Blink_PC4();
 //			Blink_PC4();
 //		}
-		MAX17048_BatteryData battery_data;
-		if (MAX17048_Read_Battery(&hi2c4, &battery_data) == HAL_OK) {
-			Blink_PC4();
-			printf("state of charge: %d%%\r\n", (int)battery_data.soc);
-			printf("charge rate: %d%%/hour\r\n", (int)battery_data.chg_rate);
 
-		} else {
-			Blink_PC4();
-			Blink_PC4();
-		}
-		HAL_Delay(600);
+//		MAX17048_BatteryData battery_data;
+//		if (MAX17048_Read_Battery(&hi2c4, &battery_data) == HAL_OK) {
+//			Blink_PC4();
+//			printf("state of charge: %d%%\r\n", (int)battery_data.soc);
+//			printf("charge rate: %d%%/hour\r\n", (int)battery_data.chg_rate);
+//
+//		} else {
+//			Blink_PC4();
+//			Blink_PC4();
+//		}
+//		HAL_Delay(600);
+		printf("set brightness max");
+		fflush(stdout);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 999);
+		HAL_Delay(1000);
+		printf("set brightness low");
+		fflush(stdout);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
+		HAL_Delay(1000);
 	}
   /* USER CODE END 5 */
 }
