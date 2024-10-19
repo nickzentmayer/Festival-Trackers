@@ -59,12 +59,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BTN_Pin GPIO_PIN_15
+#define BTN_GPIO_Port GPIOC
+#define BTN_EXTI_IRQn EXTI15_10_IRQn
+#define LDO_EN_Pin GPIO_PIN_1
+#define LDO_EN_GPIO_Port GPIOC
 #define TP_PA2_Pin GPIO_PIN_2
 #define TP_PA2_GPIO_Port GPIOA
 #define TP_PC4_Pin GPIO_PIN_4
 #define TP_PC4_GPIO_Port GPIOC
-#define BTN_Pin GPIO_PIN_5
-#define BTN_GPIO_Port GPIOC
 #define LCD_BL_Pin GPIO_PIN_9
 #define LCD_BL_GPIO_Port GPIOE
 #define LCD_RST_Pin GPIO_PIN_10
@@ -75,8 +78,6 @@ void Error_Handler(void);
 #define LORA_DIO1_GPIO_Port GPIOB
 #define LORA_BUSY_Pin GPIO_PIN_14
 #define LORA_BUSY_GPIO_Port GPIOB
-#define INT_MAG_Pin GPIO_PIN_15
-#define INT_MAG_GPIO_Port GPIOB
 #define XL_INT0_Pin GPIO_PIN_8
 #define XL_INT0_GPIO_Port GPIOD
 #define XL_INT1_Pin GPIO_PIN_9
@@ -87,8 +88,6 @@ void Error_Handler(void);
 #define LORA_NSS_GPIO_Port GPIOA
 #define BATT_STAT_Pin GPIO_PIN_4
 #define BATT_STAT_GPIO_Port GPIOD
-#define FG_NALERT_Pin GPIO_PIN_5
-#define FG_NALERT_GPIO_Port GPIOD
 #define GPS_ON_Pin GPIO_PIN_5
 #define GPS_ON_GPIO_Port GPIOB
 

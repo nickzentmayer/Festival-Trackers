@@ -64,6 +64,7 @@ QSPI_HandleTypeDef hqspi;
 SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart8;
 
@@ -91,12 +92,12 @@ static void MX_I2C4_Init(void);
 static void MX_QUADSPI_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_UART8_Init(void);
+static void MX_TIM6_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
-static void Blink_PC4(void);
 
 /* USER CODE END PFP */
 
@@ -158,6 +159,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  __HAL_RCC_SYSCFG_CLK_ENABLE();
 
   /* USER CODE END Init */
 
@@ -177,15 +179,19 @@ int main(void)
   MX_QUADSPI_Init();
   MX_TIM1_Init();
   MX_UART8_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   MX_USB_DEVICE_Init();          // Initialize USB CDC
 
   // start receiving data on UART8 via interrupt, one byte at a time
   HAL_UART_Receive_IT(&huart8, (uint8_t*)rx_buffer, 1);
+  HAL_Delay(2000);
+  HAL_GPIO_WritePin(GPIOC, LDO_EN_Pin, GPIO_PIN_SET);
 
   LSM303AGR_Init(&hi2c4);
   HAL_LTDC_SetAddress(&hltdc, (uint32_t)framebuffer, LTDC_LAYER_1);
-//  Display_Init();
+
+  HAL_GPIO_WritePin(GPIOE, LCD_RST_Pin, GPIO_PIN_SET);
   HAL_StatusTypeDef st7701_init_status = ST7701_Init(&hspi1);
   if (st7701_init_status != HAL_OK) {
 	  printf("st7701 initialization failed!\n");
@@ -203,7 +209,7 @@ int main(void)
 	  // Initialization Error
 	  Error_Handler();
   }
-
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, htim1.Init.Period);
 
   /* USER CODE END 2 */
 
@@ -561,7 +567,7 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_SET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
@@ -586,6 +592,46 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 32000;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 3000;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+  HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 5, 0); // Set interrupt priority
+  HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn); // Enable the TIM6 interrupt
+  HAL_TIM_Base_Start_IT(&htim6); // Start the timer with interrupts
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
@@ -669,26 +715,39 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, LDO_EN_Pin|TP_PC4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, TP_PA2_Pin|LORA_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(TP_PC4_GPIO_Port, TP_PC4_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LORA_RST_Pin|GPS_ON_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin : BTN_Pin */
+  GPIO_InitStruct.Pin = BTN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(BTN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LDO_EN_Pin TP_PC4_Pin */
+  GPIO_InitStruct.Pin = LDO_EN_Pin|TP_PC4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : TP_PA2_Pin LORA_NSS_Pin */
   GPIO_InitStruct.Pin = TP_PA2_Pin|LORA_NSS_Pin;
@@ -697,23 +756,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : TP_PC4_Pin */
-  GPIO_InitStruct.Pin = TP_PC4_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(TP_PC4_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : BTN_Pin */
-  GPIO_InitStruct.Pin = BTN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(BTN_GPIO_Port, &GPIO_InitStruct);
-
   /*Configure GPIO pin : LCD_RST_Pin */
   GPIO_InitStruct.Pin = LCD_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LCD_RST_GPIO_Port, &GPIO_InitStruct);
 
@@ -730,12 +776,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : INT_MAG_Pin */
-  GPIO_InitStruct.Pin = INT_MAG_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(INT_MAG_GPIO_Port, &GPIO_InitStruct);
-
   /*Configure GPIO pins : XL_INT0_Pin XL_INT1_Pin */
   GPIO_InitStruct.Pin = XL_INT0_Pin|XL_INT1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
@@ -749,13 +789,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LCD_CS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BATT_STAT_Pin FG_NALERT_Pin */
-  GPIO_InitStruct.Pin = BATT_STAT_Pin|FG_NALERT_Pin;
+  /*Configure GPIO pin : BATT_STAT_Pin */
+  GPIO_InitStruct.Pin = BATT_STAT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  HAL_GPIO_Init(BATT_STAT_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
+
   /*Configure GPIO pin : PE9 */
   GPIO_InitStruct.Pin = GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;    // Alternate Function Push-Pull
@@ -768,13 +813,26 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void Blink_PC4(void) {
-    HAL_GPIO_WritePin(GPIOC, TP_PC4_Pin, GPIO_PIN_SET);
-    HAL_Delay(100);
-    HAL_GPIO_WritePin(GPIOC, TP_PC4_Pin, GPIO_PIN_RESET);
-    HAL_Delay(100);
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	printf("BTN PRESSED");
+	fflush(stdout);
+    if (GPIO_Pin == GPIO_PIN_15) { // Check if the interrupt is from PC15
+        if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == GPIO_PIN_SET) {
+            // Button is pressed: Start 3-second timer
+        	printf("BTN STILL PRESSED\n");
+			fflush(stdout);
+            __HAL_TIM_SET_COUNTER(&htim6, 0); // Reset the timer counter
+            HAL_TIM_Base_Start_IT(&htim6);
+            printf("TIMER STARTED\n");
+            fflush(stdout);
+        } else {
+            // Button is released: Stop the timer
+            HAL_TIM_Base_Stop_IT(&htim6);
+        }
+    }
 }
+
+
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if (rx_buffer[0] == '$') {
@@ -789,7 +847,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 		// Process the complete GGA sentence
 		bool success = Process_GGA_Sentence(gga_buffer, &gps_data);
-		if (success) Blink_PC4();
+		if (success) printf("%d satellites", gps_data.num_satellites);
 
 		// Reset the index to start a new sentence
 		gga_index = 0;
@@ -805,29 +863,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	HAL_UART_Receive_IT(huart, rx_buffer, 1);
 }
 
-double factorial(int n) {
-    if (n <= 1) return 1;
-    return n * factorial(n - 1);
-}
-
-void LCD_Clear(uint16_t color)
-{
-    uint32_t x, y;
-
-    for (y = 0; y < 480; y++)
-    {
-        for (x = 0; x < 480; x++)
-        {
-            framebuffer[y * 480 + x] = color;
-        }
-    }
-
-    /* Ensure data is written by flushing the data cache */
-    SCB_CleanInvalidateDCache();
-}
-
-
-
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -839,6 +874,7 @@ void LCD_Clear(uint16_t color)
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+	int p = 1000;
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 5 */
@@ -863,14 +899,25 @@ void StartDefaultTask(void *argument)
 //			Blink_PC4();
 //		}
 //		HAL_Delay(600);
-		printf("set brightness max");
-		fflush(stdout);
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 999);
-		HAL_Delay(1000);
-		printf("set brightness low");
-		fflush(stdout);
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
-		HAL_Delay(1000);
+//		printf("set brightness max");
+//		fflush(stdout);
+		if (p <= 0) {
+			p = 1000;
+		} else {
+			p--;
+		}
+
+		if (p % 10 == 0) {
+			printf("set brightness to %d\r\n", 100 - (p / 10));
+			fflush(stdout);
+		}
+
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, p);
+		HAL_Delay(5);
+//		printf("set brightness low");
+//		fflush(stdout);
+//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
+//		HAL_Delay(1000);
 	}
   /* USER CODE END 5 */
 }
@@ -915,6 +962,17 @@ void MPU_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
+	if (htim->Instance == TIM6) { // Check if this is the interrupt from TIM6
+		printf("TIMER FINISHED");
+		fflush(stdout);
+		// Code to execute when the timer reaches the period (e.g., every 3 seconds)
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) == GPIO_PIN_SET) {
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); // Set PC1 low
+		}
+
+		// Stop the timer to prevent continuous triggering (optional)
+		HAL_TIM_Base_Stop_IT(htim);
+	}
 
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {
