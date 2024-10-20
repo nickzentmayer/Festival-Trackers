@@ -1,3 +1,8 @@
-../Core/Src/st7701.c:16:19:ST7701_SendCommand	24	static
-../Core/Src/st7701.c:22:19:ST7701_SendData	24	static
-../Core/Src/st7701.c:28:19:ST7701_Init	24	static
+../Core/Src/st7701.c:23:13:ST7701_Delay	16	static
+../Core/Src/st7701.c:28:13:ST7701_SetCS	16	static
+../Core/Src/st7701.c:32:13:ST7701_SetSCK	16	static
+../Core/Src/st7701.c:36:13:ST7701_SetMOSI	16	static
+../Core/Src/st7701.c:40:13:ST7701_Send9Bit	24	static
+../Core/Src/st7701.c:60:19:ST7701_SendCommand	24	static
+../Core/Src/st7701.c:67:19:ST7701_SendData	24	static
+../Core/Src/st7701.c:75:19:ST7701_Init	16	static

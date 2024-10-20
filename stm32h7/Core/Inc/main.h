@@ -66,6 +66,8 @@ void Error_Handler(void);
 #define LDO_EN_GPIO_Port GPIOC
 #define TP_PA2_Pin GPIO_PIN_2
 #define TP_PA2_GPIO_Port GPIOA
+#define MOSI_Pin GPIO_PIN_7
+#define MOSI_GPIO_Port GPIOA
 #define TP_PC4_Pin GPIO_PIN_4
 #define TP_PC4_GPIO_Port GPIOC
 #define LCD_BL_Pin GPIO_PIN_9
@@ -88,6 +90,10 @@ void Error_Handler(void);
 #define LORA_NSS_GPIO_Port GPIOA
 #define BATT_STAT_Pin GPIO_PIN_4
 #define BATT_STAT_GPIO_Port GPIOD
+#define SCK_Pin GPIO_PIN_3
+#define SCK_GPIO_Port GPIOB
+#define MISO_Pin GPIO_PIN_4
+#define MISO_GPIO_Port GPIOB
 #define GPS_ON_Pin GPIO_PIN_5
 #define GPS_ON_GPIO_Port GPIOB
 

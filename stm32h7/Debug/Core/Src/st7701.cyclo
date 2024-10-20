@@ -1,3 +1,8 @@
-../Core/Src/st7701.c:16:19:ST7701_SendCommand	1
-../Core/Src/st7701.c:22:19:ST7701_SendData	1
-../Core/Src/st7701.c:28:19:ST7701_Init	4
+../Core/Src/st7701.c:23:13:ST7701_Delay	2
+../Core/Src/st7701.c:28:13:ST7701_SetCS	1
+../Core/Src/st7701.c:32:13:ST7701_SetSCK	1
+../Core/Src/st7701.c:36:13:ST7701_SetMOSI	1
+../Core/Src/st7701.c:40:13:ST7701_Send9Bit	2
+../Core/Src/st7701.c:60:19:ST7701_SendCommand	1
+../Core/Src/st7701.c:67:19:ST7701_SendData	1
+../Core/Src/st7701.c:75:19:ST7701_Init	4

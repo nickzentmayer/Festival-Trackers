@@ -10,8 +10,13 @@
 
 #include "stm32h7xx_hal.h"
 
-HAL_StatusTypeDef ST7701_SendCommand(SPI_HandleTypeDef *hspi, uint8_t cmd);
-HAL_StatusTypeDef ST7701_SendData(SPI_HandleTypeDef *hspi, uint8_t data);
-HAL_StatusTypeDef ST7701_Init(SPI_HandleTypeDef *hspi);
+// Function to initialize the ST7701 display
+HAL_StatusTypeDef ST7701_Init(void);
+
+// Function to send a command to the ST7701 using bit-banging
+HAL_StatusTypeDef ST7701_SendCommand(uint8_t cmd);
+
+// Function to send data to the ST7701 using bit-banging
+HAL_StatusTypeDef ST7701_SendData(uint8_t data);
 
 #endif /* SRC_ST7701_H_ */

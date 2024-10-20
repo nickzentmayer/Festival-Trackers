@@ -43,6 +43,8 @@
 /* USER CODE BEGIN PD */
 
 #define GGA_BUFFER_SIZE 100
+#define POWER_ON_HOLD_MS 3000
+#define POWER_OFF_HOLD_MS 3000
 
 /* USER CODE END PD */
 
@@ -60,8 +62,6 @@ DMA_HandleTypeDef hdma_i2c4_tx;
 LTDC_HandleTypeDef hltdc;
 
 QSPI_HandleTypeDef hqspi;
-
-SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
@@ -87,7 +87,6 @@ static void MPU_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_BDMA_Init(void);
 static void MX_LTDC_Init(void);
-static void MX_SPI1_Init(void);
 static void MX_I2C4_Init(void);
 static void MX_QUADSPI_Init(void);
 static void MX_TIM1_Init(void);
@@ -174,32 +173,41 @@ int main(void)
   MX_GPIO_Init();
   MX_BDMA_Init();
   MX_LTDC_Init();
-  MX_SPI1_Init();
   MX_I2C4_Init();
   MX_QUADSPI_Init();
   MX_TIM1_Init();
   MX_UART8_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-  MX_USB_DEVICE_Init();          // Initialize USB CDC
+  MX_USB_DEVICE_Init(); // Initialize USB CDC
 
-  // start receiving data on UART8 via interrupt, one byte at a time
-  HAL_UART_Receive_IT(&huart8, (uint8_t*)rx_buffer, 1);
-  HAL_Delay(2000);
-  HAL_GPIO_WritePin(GPIOC, LDO_EN_Pin, GPIO_PIN_SET);
+  // power latch section. change delay to adjust power-on hold time
+  HAL_Delay(POWER_ON_HOLD_MS);
+  HAL_GPIO_WritePin(GPIOC, LDO_EN_Pin, GPIO_PIN_SET); // keep the LDO_EN set high when BTN released
 
-  LSM303AGR_Init(&hi2c4);
-  HAL_LTDC_SetAddress(&hltdc, (uint32_t)framebuffer, LTDC_LAYER_1);
+  // update period of TIM6 to configure power-off timer
+  __HAL_TIM_SET_AUTORELOAD(&htim6, POWER_OFF_HOLD_MS);
 
-  HAL_GPIO_WritePin(GPIOE, LCD_RST_Pin, GPIO_PIN_SET);
-  HAL_StatusTypeDef st7701_init_status = ST7701_Init(&hspi1);
-  if (st7701_init_status != HAL_OK) {
-	  printf("st7701 initialization failed!\n");
-  } else {
-	  printf("st7701 initialized! setting framebuffer to blue\n");
+  // do extra LTDC initialization stuff
+
+  // adjust the LTDC framebuffer address to the new private variable `framebuffer`
+  HAL_LTDC_SetAddress(&hltdc, (uint32_t)&framebuffer, LTDC_LAYER_1);
+
+  HAL_StatusTypeDef st7701_init_status = ST7701_Init();
+	if (st7701_init_status != HAL_OK) {
+	  printf("st7701 initialization failed!\r\n");
+	} else {
+	  printf("st7701 initialized! setting framebuffer to blue\r\n");
 	  Display_Init();
-  }
-  fflush(stdout);
+    }
+	fflush(stdout);
+
+
+  // start receiving data on UART8 via interrupt, for gps
+  HAL_UART_Receive_IT(&huart8, (uint8_t*)rx_buffer, 1);
+
+  // this one is pretty self-explanatory
+  LSM303AGR_Init(&hi2c4);
 
 //  HAL_GPIO_WritePin(GPIOB, GPS_ON_Pin, GPIO_PIN_SET);
 
@@ -279,6 +287,10 @@ void SystemClock_Config(void)
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
+  /** Macro to configure the PLL clock source
+  */
+  __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSE);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -288,16 +300,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 2;
-  RCC_OscInitStruct.PLL.PLLN = 12;
-  RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 3;
-  RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
-  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOMEDIUM;
-  RCC_OscInitStruct.PLL.PLLFRACN = 0;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -413,13 +416,13 @@ static void MX_LTDC_Init(void)
   pLayerCfg.WindowY1 = 480;
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
   pLayerCfg.Alpha = 255;
-  pLayerCfg.Alpha0 = 150;
+  pLayerCfg.Alpha0 = 0;
   pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
   pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
   pLayerCfg.FBStartAdress = 0x08100000;
   pLayerCfg.ImageWidth = 480;
   pLayerCfg.ImageHeight = 480;
-  pLayerCfg.Backcolor.Blue = 255;
+  pLayerCfg.Backcolor.Blue = 0;
   pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
   if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
@@ -428,6 +431,18 @@ static void MX_LTDC_Init(void)
   }
   /* USER CODE BEGIN LTDC_Init 2 */
 
+  pLayerCfg.FBStartAdress = (uint32_t)&framebuffer;
+  if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+//  __HAL_LTDC_ENABLE_IT(&hltdc, LTDC_IT_RR); // Enable Reload Interrupt
+  __HAL_LTDC_ENABLE_IT(&hltdc, LTDC_IT_LI); // Enable Line Interrupt
+//  __HAL_LTDC_ENABLE_IT(&hltdc, LTDC_IT_FU); // Enable FIFO Underrun Interrupt
+//  HAL_NVIC_SetPriority(LTDC_IRQn, 0, 0);
+//  HAL_NVIC_EnableIRQ(LTDC_IRQn);
+  HAL_LTDC_ProgramLineEvent(&hltdc, 0); // Triggers at the beginning of the vertical blanking period
   /* USER CODE END LTDC_Init 2 */
 
 }
@@ -464,54 +479,6 @@ static void MX_QUADSPI_Init(void)
   /* USER CODE BEGIN QUADSPI_Init 2 */
 
   /* USER CODE END QUADSPI_Init 2 */
-
-}
-
-/**
-  * @brief SPI1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI1_Init(void)
-{
-
-  /* USER CODE BEGIN SPI1_Init 0 */
-
-  /* USER CODE END SPI1_Init 0 */
-
-  /* USER CODE BEGIN SPI1_Init 1 */
-
-  /* USER CODE END SPI1_Init 1 */
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 0x0;
-  hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  hspi1.Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
-  hspi1.Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
-  hspi1.Init.TxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-  hspi1.Init.RxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-  hspi1.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
-  hspi1.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
-  hspi1.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-  hspi1.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
-  hspi1.Init.IOSwap = SPI_IO_SWAP_DISABLE;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI1_Init 2 */
-
-  /* USER CODE END SPI1_Init 2 */
 
 }
 
@@ -628,7 +595,7 @@ static void MX_TIM6_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM6_Init 2 */
-  HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 5, 0); // Set interrupt priority
+  HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0); // Set interrupt priority
   HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn); // Enable the TIM6 interrupt
   HAL_TIM_Base_Start_IT(&htim6); // Start the timer with interrupts
   /* USER CODE END TIM6_Init 2 */
@@ -725,13 +692,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, LDO_EN_Pin|TP_PC4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, TP_PA2_Pin|LORA_NSS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, TP_PA2_Pin|MOSI_Pin|LORA_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_RST_GPIO_Port, LCD_RST_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LORA_RST_Pin|GPS_ON_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LORA_RST_Pin|SCK_Pin|GPS_ON_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
@@ -756,10 +723,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : MOSI_Pin */
+  GPIO_InitStruct.Pin = MOSI_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(MOSI_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LCD_RST_Pin */
   GPIO_InitStruct.Pin = LCD_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LCD_RST_GPIO_Port, &GPIO_InitStruct);
 
@@ -770,8 +744,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LORA_DIO1_Pin LORA_BUSY_Pin */
-  GPIO_InitStruct.Pin = LORA_DIO1_Pin|LORA_BUSY_Pin;
+  /*Configure GPIO pins : LORA_DIO1_Pin LORA_BUSY_Pin MISO_Pin */
+  GPIO_InitStruct.Pin = LORA_DIO1_Pin|LORA_BUSY_Pin|MISO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -795,6 +769,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BATT_STAT_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SCK_Pin */
+  GPIO_InitStruct.Pin = SCK_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(SCK_GPIO_Port, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
@@ -813,6 +794,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+// called when BTN is pressed
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	printf("BTN PRESSED");
 	fflush(stdout);
@@ -832,6 +814,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     }
 }
 
+// triggered at the end of each frame
+void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef *hltdc)
+{
+    printf("frame done!\r\n");
+    fflush(stdout);
+}
 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
@@ -874,10 +862,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-	int p = 1000;
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 5 */
+  int p = 1000;
   /* Infinite loop */
 	for(;;)
 	{
@@ -914,6 +902,7 @@ void StartDefaultTask(void *argument)
 
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, p);
 		HAL_Delay(5);
+//		vTaskDelay(5);
 //		printf("set brightness low");
 //		fflush(stdout);
 //		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
