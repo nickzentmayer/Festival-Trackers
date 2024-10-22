@@ -5,4 +5,4 @@
 ../Core/Src/st7701.c:40:13:ST7701_Send9Bit	2
 ../Core/Src/st7701.c:60:19:ST7701_SendCommand	1
 ../Core/Src/st7701.c:67:19:ST7701_SendData	1
-../Core/Src/st7701.c:75:19:ST7701_Init	4
+../Core/Src/st7701.c:75:19:ST7701_Init	1
