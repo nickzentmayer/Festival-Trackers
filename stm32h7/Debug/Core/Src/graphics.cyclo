@@ -1,0 +1,13 @@
+../Core/Src/graphics.c:8:7:createText	2
+../Core/Src/graphics.c:22:12:createRectangle	2
+../Core/Src/graphics.c:37:7:createLine	2
+../Core/Src/graphics.c:54:9:rgbToColor	1
+../Core/Src/graphics.c:59:6:setPixel	5
+../Core/Src/graphics.c:66:6:drawLineObject	7
+../Core/Src/graphics.c:84:6:drawRectangleObject	3
+../Core/Src/graphics.c:93:6:drawTextObject	2
+../Core/Src/graphics.c:105:6:drawChar	5
+../Core/Src/graphics.c:117:6:addDrawable	2
+../Core/Src/graphics.c:128:6:drawLayer	3
+../Core/Src/graphics.c:139:6:drawLayerAlways	2
+../Core/Src/graphics.c:147:6:clearLayer	2
